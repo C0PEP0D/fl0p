@@ -31,9 +31,9 @@ using TypeFlow = fl0w::fl0p::Unstationary<TypeVector, TypeMatrix, TypeRef, TypeM
 void print(const TypeFlow& flow, const TypeVector& x, const TypeScalar& t) {
     std::cout << std::endl;
     std::cout << "flow.getVelocity(" << x.transpose() << ", " << t << ") = \n" << flow.getVelocity(x, t).transpose() << std::endl;
-    std::cout << "flow.getJacobian(" << x.transpose() << ", " << t << ") = \n" << flow.getJacobian(x, t) << std::endl;
-    std::cout << "flow.getVorticity(" << x.transpose() << ", " << t << ") = \n" << flow.getVorticity(x, t).transpose() << std::endl;
-    std::cout << "flow.getAcceleration(" << x.transpose() << ", " << t << ") = \n" << flow.getAcceleration(x, t).transpose() << std::endl;
+    //std::cout << "flow.getJacobian(" << x.transpose() << ", " << t << ") = \n" << flow.getJacobian(x, t) << std::endl;
+    //std::cout << "flow.getVorticity(" << x.transpose() << ", " << t << ") = \n" << flow.getVorticity(x, t).transpose() << std::endl;
+    //std::cout << "flow.getAcceleration(" << x.transpose() << ", " << t << ") = \n" << flow.getAcceleration(x, t).transpose() << std::endl;
     std::cout << std::endl;
 }
 

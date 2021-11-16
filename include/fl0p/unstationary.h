@@ -55,7 +55,7 @@ class Unstationary : public Flow<TypeVector, TypeMatrix, TypeRef> {
             for(std::size_t i = 0; i < timeOrder + 1; i++) {
                 velocity[i] = data[tStartIndex + i].getVelocity(x, t);
             }
-            return p0l::lagrangeMesh<TypeTimeSubMesh, TypeContainer, TypeVector, TypeVectorScalar, TypeRef>(TypeTimeSubMesh(TypeContainer<std::size_t>(1, timeOrder+1), TypeContainer<int>(1, tStartIndex), sTimeMesh), velocity, TypeVectorScalar(t));
+            return p0l::lagrangeMeshPoint<TypeTimeSubMesh, TypeContainer, TypeVector, TypeVectorScalar, TypeRef>(TypeTimeSubMesh(TypeContainer<std::size_t>(1, timeOrder+1), TypeContainer<int>(1, tStartIndex), sTimeMesh), velocity, TypeVectorScalar(t));
         }
 
         TypeMatrix getJacobian(const TypeRef<const TypeVector>& x, const double& t) const override {
@@ -69,7 +69,7 @@ class Unstationary : public Flow<TypeVector, TypeMatrix, TypeRef> {
             for(std::size_t i = 0; i < timeOrder + 1; i++) {
                 jacobian[i] = data[tStartIndex + i].getJacobian(x, t);
             }
-            return p0l::lagrangeMesh<TypeTimeSubMesh, TypeContainer, TypeMatrix, TypeVectorScalar, TypeRef>(TypeTimeSubMesh(TypeContainer<std::size_t>(1, timeOrder+1), TypeContainer<int>(1, tStartIndex), sTimeMesh), jacobian, TypeVectorScalar(t));
+            return p0l::lagrangeMeshPoint<TypeTimeSubMesh, TypeContainer, TypeMatrix, TypeVectorScalar, TypeRef>(TypeTimeSubMesh(TypeContainer<std::size_t>(1, timeOrder+1), TypeContainer<int>(1, tStartIndex), sTimeMesh), jacobian, TypeVectorScalar(t));
         }
 
         TypeVector getAcceleration(const TypeRef<const TypeVector>& x, const double& t) const override {

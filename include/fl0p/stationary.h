@@ -33,14 +33,14 @@ class Stationary : public Flow<TypeVector, TypeMatrix, TypeRef> {
         TypeVector getVelocity(const TypeRef<const TypeVector>& x, const double& t) const override {
             TypeVector u;
             for(std::size_t i = 0; i < u.size(); i++) {
-                u[i] = p0l::lagrangeMesh<TypeMesh, TypeDataContainer, float, TypeVector, TypeRef, TypeSubMesh>(sMesh, velocity[i], x, order+1);
+                u[i] = p0l::lagrangeMeshCell<TypeMesh, TypeDataContainer, float, TypeVector, TypeRef, TypeSubMesh>(sMesh, velocity[i], x, order+1);
             }
             return u;
         }
         TypeMatrix getJacobian(const TypeRef<const TypeVector>& x, const double& t) const override {
             TypeMatrix J;
             for(std::size_t i = 0; i < J.reshaped().size(); i++) {
-                J.reshaped()[i] = p0l::lagrangeMesh<TypeMesh, TypeDataContainer, float, TypeVector, TypeRef, TypeSubMesh>(sMesh, jacobian[i], x, order+1);
+                J.reshaped()[i] = p0l::lagrangeMeshCell<TypeMesh, TypeDataContainer, float, TypeVector, TypeRef, TypeSubMesh>(sMesh, jacobian[i], x, order+1);
             }
             return J;
         }
