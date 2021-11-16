@@ -57,7 +57,7 @@ One should either install these dependencies accordingly, or adapt their path in
 Start by cloning this repository.
 
 ```sh
-$ git clone https://gitlab.com/rmonthil/c0pep0d.git
+$ git clone https://github.com/C0PEP0D/fl0p.git
 ```
 
 ### Examples
