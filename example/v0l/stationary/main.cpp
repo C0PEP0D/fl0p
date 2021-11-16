@@ -7,7 +7,7 @@
 #include <Eigen/Dense>
 // Lib includes
 #include "v0l/bin/file_data.h"
-#include "m0sh/regular.h"
+#include "m0sh/uniform.h"
 #include "m0sh/structured_sub.h"
 #include "fl0p/stationary.h"
 
@@ -21,7 +21,7 @@ using TypeRef = Eigen::Ref<Args...>;
 
 template<typename ...Args>
 using TypeContainer = std::vector<Args...>;
-using TypeMesh = m0sh::Regular<TypeVector, TypeRef, TypeContainer>;
+using TypeMesh = m0sh::Uniform<TypeVector, TypeRef, TypeContainer>;
 using TypeMeshSub = m0sh::StructuredSub<TypeVector, TypeRef, TypeContainer>;
 using TypeFlow = fl0w::fl0p::Stationary<TypeVector, TypeMatrix, TypeRef, TypeMesh, TypeContainer, TypeMeshSub, v0l::FileData>;
 
@@ -49,7 +49,7 @@ int main () {
     v0l::FileData<float> vz("../data/v.vtk", 2);
     // // flow
     std::cout << "building flow..." << std::endl;
-    TypeFlow flow(std::make_shared<TypeMesh>(vx.meta.dimensions, lengths, origin), std::vector<v0l::FileData<float>>({vx, vy, vz}), 4);
+    TypeFlow flow(std::make_shared<TypeMesh>(vx.meta.dimensions, lengths, origin, std::vector<bool>(DIM, true)), std::vector<v0l::FileData<float>>({vx, vy, vz}), 4);
     std::cout << "flow built !" << std::endl;
 
     // Print

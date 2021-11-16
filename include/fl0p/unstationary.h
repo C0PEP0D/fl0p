@@ -45,11 +45,11 @@ class Unstationary : public Flow<TypeVector, TypeMatrix, TypeRef> {
         }
     public:
         TypeVector getVelocity(const TypeRef<const TypeVector>& x, const double& t) const override {
-            int tStartIndex = sTimeMesh->index(TypeVectorScalar(t)) - timeOrder/2;
+            int tStartIndex = sTimeMesh->indexPoint(TypeVectorScalar(t)) - timeOrder/2;
             if(tStartIndex < 0) {
                 tStartIndex = 0;
-            } else if(tStartIndex > sTimeMesh->n[0] - (timeOrder + 1)) {
-                tStartIndex = sTimeMesh->n[0] - (timeOrder + 1);
+            } else if(tStartIndex > sTimeMesh->nPoints[0] - (timeOrder + 1)) {
+                tStartIndex = sTimeMesh->nPoints[0] - (timeOrder + 1);
             }
             TypeContainer<TypeVector> velocity(timeOrder + 1);
             for(std::size_t i = 0; i < timeOrder + 1; i++) {
@@ -59,11 +59,11 @@ class Unstationary : public Flow<TypeVector, TypeMatrix, TypeRef> {
         }
 
         TypeMatrix getJacobian(const TypeRef<const TypeVector>& x, const double& t) const override {
-            int tStartIndex = sTimeMesh->index(TypeVectorScalar(t)) - timeOrder/2;
+            int tStartIndex = sTimeMesh->indexPoint(TypeVectorScalar(t)) - timeOrder/2;
             if(tStartIndex < 0) {
                 tStartIndex = 0;
-            } else if(tStartIndex > sTimeMesh->n[0] - (timeOrder + 1)) {
-                tStartIndex = sTimeMesh->n[0] - (timeOrder + 1);
+            } else if(tStartIndex > sTimeMesh->nPoints[0] - (timeOrder + 1)) {
+                tStartIndex = sTimeMesh->nPoints[0] - (timeOrder + 1);
             }
             TypeContainer<TypeMatrix> jacobian(timeOrder + 1);
             for(std::size_t i = 0; i < timeOrder + 1; i++) {

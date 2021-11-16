@@ -7,7 +7,7 @@
 #include <Eigen/Dense>
 // Lib includes
 #include "v0l/bin/file_data.h"
-#include "m0sh/regular.h"
+#include "m0sh/uniform.h"
 #include "m0sh/structured_sub.h"
 #include "fl0p/unstationary.h"
 
@@ -22,9 +22,9 @@ using TypeRef = Eigen::Ref<Args...>;
 
 template<typename ...Args>
 using TypeContainer = std::vector<Args...>;
-using TypeMesh = m0sh::Regular<TypeVector, TypeRef, TypeContainer>;
+using TypeMesh = m0sh::Uniform<TypeVector, TypeRef, TypeContainer>;
 using TypeMeshSub = m0sh::StructuredSub<TypeVector, TypeRef, TypeContainer>;
-using TypeTimeMesh = m0sh::Regular<TypeVectorScalar, TypeRef, TypeContainer>;
+using TypeTimeMesh = m0sh::Uniform<TypeVectorScalar, TypeRef, TypeContainer>;
 using TypeTimeMeshSub = m0sh::StructuredSub<TypeVectorScalar, TypeRef, TypeContainer>;
 using TypeFlow = fl0w::fl0p::Unstationary<TypeVector, TypeMatrix, TypeRef, TypeMesh, TypeContainer, TypeMeshSub, TypeTimeMesh, TypeTimeMeshSub, TypeVectorScalar, v0l::FileData>;
 
@@ -55,7 +55,7 @@ int main () {
     }
     // // flow
     std::cout << "building flow..." << std::endl;
-    TypeFlow flow(std::make_shared<TypeMesh>(velocity[0][0].meta.dimensions, lengths, origin), velocity, 4, std::make_shared<TypeTimeMesh>(std::vector<std::size_t>(1, 2), std::vector<double>(1, 0.02), TypeVectorScalar(-0.005)), 1);
+    TypeFlow flow(std::make_shared<TypeMesh>(velocity[0][0].meta.dimensions, lengths, origin, TypeContainer<bool>(DIM, true)), velocity, 4, std::make_shared<TypeTimeMesh>(std::vector<std::size_t>(1, 1), std::vector<double>(1, 0.02), TypeVectorScalar(0.0), std::vector<bool>(1, false)), 1);
     std::cout << "flow built !" << std::endl;
     // print
     print(flow, TypeVector({-0.5, -0.5, -0.5}), 0.0);
