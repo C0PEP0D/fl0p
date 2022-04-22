@@ -24,7 +24,7 @@ namespace fl0p {
 template<typename TypeVector, typename TypeMatrix, template<typename...> class TypeRef, typename TypeMesh, template<typename...> typename TypeContainer, typename TypeSubMesh, template<typename...> typename TypeDataContainer>
 class Stationary : public Flow<TypeVector, TypeMatrix, TypeRef> {
     public:
-        Stationary(const std::shared_ptr<TypeMesh>& p_sMesh, const TypeContainer<TypeDataContainer<float>>& p_velocity, const TypeContainer<TypeDataContainer<float>>& p_jacobian, const std::size_t& p_order) : Flow<TypeVector, TypeMatrix, TypeRef>::Flow(), sMesh(p_sMesh), velocity(p_velocity), jacobian(p_jacobian), order(p_order) {
+        Stationary(const std::shared_ptr<TypeMesh>& p_sMesh, const TypeContainer<TypeDataContainer<float>>& p_velocity, const TypeContainer<TypeDataContainer<float>>& p_gradients, const std::size_t& p_order) : Flow<TypeVector, TypeMatrix, TypeRef>::Flow(), sMesh(p_sMesh), velocity(p_velocity), gradients(p_gradients), order(p_order) {
         }
         Stationary(const std::shared_ptr<TypeMesh>& p_sMesh, const TypeContainer<TypeDataContainer<float>>& p_velocity, const std::size_t& p_order) : Flow<TypeVector, TypeMatrix, TypeRef>::Flow(), sMesh(p_sMesh), velocity(p_velocity), order(p_order) {
             //computeJacobian();
@@ -37,12 +37,12 @@ class Stationary : public Flow<TypeVector, TypeMatrix, TypeRef> {
             }
             return u;
         }
-        TypeMatrix getJacobian(const TypeRef<const TypeVector>& x, const double& t) const override {
-            TypeMatrix J;
-            for(std::size_t i = 0; i < J.reshaped().size(); i++) {
-                J.reshaped()[i] = p0l::lagrangeMeshCell<TypeMesh, TypeDataContainer, float, TypeVector, TypeRef, TypeSubMesh>(sMesh, jacobian[i], x, order+1);
+        TypeMatrix getVelocityGradients(const TypeRef<const TypeVector>& x, const double& t) const override {
+            TypeMatrix grads;
+            for(std::size_t i = 0; i < grads.reshaped().size(); i++) {
+                grads.reshaped()[i] = p0l::lagrangeMeshCell<TypeMesh, TypeDataContainer, float, TypeVector, TypeRef, TypeSubMesh>(sMesh, gradients[i], x, order+1);
             }
-            return J;
+            return grads;
         }
         TypeVector getAcceleration(const TypeRef<const TypeVector>& x, const double& t) const override {
             return TypeVector::Zero();
@@ -56,13 +56,13 @@ class Stationary : public Flow<TypeVector, TypeMatrix, TypeRef> {
         //            ijkp[j] += 1;
         //            TypeContainer<int> ijkm = ijk;
         //            ijkm[j] -= 1;
-        //            jacobian[k].col(j) = (velocity[sMesh->index(ijkp)] - velocity[sMesh->index(ijkm)]) / (sMesh->x(ijkp)(j) - sMesh->x(ijkm)(j));
+        //            gradients[k].col(j) = (velocity[sMesh->index(ijkp)] - velocity[sMesh->index(ijkm)]) / (sMesh->x(ijkp)(j) - sMesh->x(ijkm)(j));
         //        }
         //    }
         //}
     public:
         TypeContainer<TypeDataContainer<float>> velocity;
-        TypeContainer<TypeDataContainer<float>> jacobian;
+        TypeContainer<TypeDataContainer<float>> gradients;
         std::shared_ptr<TypeMesh> sMesh;
         std::size_t order;
 };
