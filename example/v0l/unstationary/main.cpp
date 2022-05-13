@@ -55,13 +55,13 @@ int main () {
     }
     // // flow
     std::cout << "building flow..." << std::endl;
-    TypeFlow flow(std::make_shared<TypeMesh>(velocity[0][0].meta.dimensions, lengths, origin, TypeContainer<bool>(DIM, true)), velocity, 4, std::make_shared<TypeTimeMesh>(std::vector<std::size_t>(1, 1), std::vector<double>(1, 0.02), TypeVectorScalar(0.0), std::vector<bool>(1, false)), 1);
+    TypeFlow flow(std::make_shared<TypeMesh>(velocity[0][0].meta.dimensions, lengths, origin, TypeContainer<bool>(DIM, true)), velocity, 1, std::make_shared<TypeTimeMesh>(std::vector<std::size_t>(1, 1), std::vector<double>(1, 0.02), TypeVectorScalar(0.0), std::vector<bool>(1, false)), 1);
     std::cout << "flow built !" << std::endl;
     // print
     print(flow, TypeVector({-0.5, -0.5, -0.5}), 0.0);
     print(flow, TypeVector({0.0, 0.0, 0.0}), 0.0);
     print(flow, TypeVector({0.5, 0.5, 0.5}), 0.0);
-    print(flow, TypeVector({-0.5, -0.5, -0.5}), 0.1);
-    print(flow, TypeVector({0.0, 0.0, 0.0}), 0.1);
-    print(flow, TypeVector({0.5, 0.5, 0.5}), 0.1);
+    print(flow, TypeVector({-0.5, -0.5, -0.5}), 0.01);
+    print(flow, TypeVector({0.0, 0.0, 0.0}), 0.01);
+    print(flow, TypeVector({0.5, 0.5, 0.5}), 0.01);
 }
